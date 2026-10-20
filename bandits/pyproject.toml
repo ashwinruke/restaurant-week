@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "restaurant-bandits"
+version = "0.1.0"
+description = "ε-greedy, UCB1 and Thompson sampling for multi-armed bandits, with regret analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+notebook = ["matplotlib>=3.9", "jupyter>=1.0"]
+dev = ["pytest>=8", "matplotlib>=3.9"]
+
+[tool.setuptools]
+packages = ["bandits"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

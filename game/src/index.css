@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 8-bit arcade, light: a pale console-grey screen (deliberately single-theme), white boxes with
+   black pixel borders and hard shadows, saturated primaries. Tokens are RGB triples so Tailwind can apply opacity. */
+:root {
+  --bg: 233 234 242;
+  --surface: 255 255 255;
+  --sunk: 243 243 248;
+  --ink: 24 23 42;
+  --muted: 88 86 118;
+  --line: 202 201 222;
+  --edge: 24 23 42;
+  --accent: 214 40 57;
+  --star: 255 184 28;
+  --gold: 160 98 0;
+  --good: 38 158 62;
+  --you: 31 138 46;
+  --ekta: 214 40 57;
+  --uday: 36 103 210;
+  --tara: 160 58 196;
+  color-scheme: light;
+}
+
+html,
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+}
+
+body {
+  font-family: "Pixelify Sans", ui-monospace, system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  /* faint 16px arcade grid */
+  background-image:
+    linear-gradient(rgb(24 23 42 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(24 23 42 / 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+svg {
+  shape-rendering: crispEdges;
+}
+.recharts-wrapper svg {
+  shape-rendering: auto;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-family: "Press Start 2P", ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+@layer components {
+  /* Dialog-box panel: dark fill, white pixel border, hard black drop shadow */
+  .px-panel {
+    background: rgb(var(--surface));
+    border: 4px solid rgb(var(--edge));
+    box-shadow: 6px 6px 0 0 #000;
+  }
+  .px-inset {
+    background: rgb(var(--sunk));
+    border: 4px solid rgb(var(--line));
+  }
+  .px-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: "Press Start 2P", ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    border: 4px solid #000;
+    box-shadow:
+      inset -4px -4px 0 0 rgb(0 0 0 / 0.35),
+      inset 4px 4px 0 0 rgb(255 255 255 / 0.25),
+      4px 4px 0 0 #000;
+    cursor: pointer;
+  }
+  .px-btn:hover {
+    filter: brightness(1.12);
+  }
+  .px-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow:
+      inset 4px 4px 0 0 rgb(0 0 0 / 0.35),
+      0 0 0 0 #000;
+  }
+  .px-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Press Start 2P", ui-monospace, monospace;
+    font-size: 8px;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 5px 6px;
+    border: 2px solid currentColor;
+  }
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blink {
+    animation: none;
+  }
+}
+
+/* Restaurant "shop sign" tile, tinted by each restaurant's hue */
+.badge {
+  background: hsl(var(--h) 72% 44%);
+  color: #fff;
+  border: 3px solid #000;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* Pixel form controls */
+select {
+  font-family: "Press Start 2P", ui-monospace, monospace;
+  font-size: 10px;
+  border-radius: 0;
+}
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgb(var(--edge));
+  background: rgb(var(--sunk));
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+}
+input[type="checkbox"]:checked::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: rgb(var(--star));
+}
+input[type="range"] {
+  appearance: none;
+  width: 100%;
+  height: 16px;
+  background: rgb(var(--sunk));
+  border: 3px solid rgb(var(--line));
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 26px;
+  background: rgb(var(--star));
+  border: 3px solid #000;
+  border-radius: 0;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 22px;
+  background: rgb(var(--star));
+  border: 3px solid #000;
+  border-radius: 0;
+}
+
+:focus-visible {
+  outline: 3px dashed rgb(var(--star));
+  outline-offset: 3px;
+}
+
+.page {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Square pixel bullets for lists in the notebook page */
+.pixel-list > li {
+  position: relative;
+  padding-left: 22px;
+}
+.pixel-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  background: rgb(var(--accent));
+}
